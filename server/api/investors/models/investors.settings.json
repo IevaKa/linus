@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "investors",
+  "info": {
+    "name": "Investors"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "email": {
+      "type": "email"
+    },
+    "project_id": {
+      "type": "integer"
+    },
+    "investment_amount": {
+      "type": "decimal"
+    }
+  }
+}

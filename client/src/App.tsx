@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Step1 from "./components/Step1";
 
-function App() {
+export interface IProject {
+  id: number;
+  name: string;
+  location: string;
+}
+
+const App: React.FC = () => {
+  const [projects, setProjects] = useState<IProject[]>([]);
+  const [selectedProject, setSelectedProject] = useState<IProject>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(
+          "https://fullstack.linus-capital.com/projects"
+        );
+        setProjects(response.data.projects);
+      } catch (error) {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Sorry, an error has occured.</div>;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ width: "100%" }}>
+      <Step1 projects={projects} setSelectedProject={setSelectedProject} />
     </div>
   );
-}
+};
 
 export default App;

@@ -5,6 +5,7 @@ import {
   BUTTON_COLOR,
   WHITE,
   ERROR_RED,
+  TRANSPARENT_ERROR_RED,
 } from "./colors";
 
 export const StyledHeading = styled.h2`
@@ -67,4 +68,12 @@ export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+export const ErrorMessage = styled.div`
+  padding: 10px;
+  margin-top: 20px;
+  width: 100%;
+  background-color: ${TRANSPARENT_ERROR_RED};
+  color: ${ERROR_RED};
 `;

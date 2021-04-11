@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React, { useState, Dispatch } from "react";
 import { IProject } from "../../App";
 import { StyledTableCell, StyledCheckbox } from "./styled";
 import {
@@ -6,6 +6,7 @@ import {
   StyledHeading,
   StyledButton,
   ContentContainer,
+  ErrorMessage,
 } from "../../styles/styledElements";
 
 interface IProps {
@@ -14,6 +15,7 @@ interface IProps {
   amount: string;
   agreed: boolean;
   setAgreed: Dispatch<boolean>;
+  submit: any;
 }
 
 const Step2: React.FC<IProps> = ({
@@ -22,8 +24,18 @@ const Step2: React.FC<IProps> = ({
   amount,
   agreed,
   setAgreed,
+  submit,
 }) => {
-  const onClick = () => {};
+  const [triedToSubmit, setTriedToSubmit] = useState(false);
+  const onClick = () => {
+    setTriedToSubmit(true);
+
+    if (!agreed) {
+      return;
+    } else {
+      submit();
+    }
+  };
   return (
     <StyledWrapper>
       <StyledHeading>Step 3</StyledHeading>
@@ -61,6 +73,9 @@ const Step2: React.FC<IProps> = ({
           <span>I accept the terms and conditions</span>
         </StyledCheckbox>
         <StyledButton onClick={onClick}>Invest</StyledButton>
+        {triedToSubmit && !agreed ? (
+          <ErrorMessage>Please accept the terms and conditions.</ErrorMessage>
+        ) : null}
       </ContentContainer>
     </StyledWrapper>
   );

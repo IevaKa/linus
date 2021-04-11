@@ -21,14 +21,6 @@ const App: React.FC = () => {
   const [isError, setIsError] = useState(false);
   const [investorInfoIsUndefined, setInvestorInfoIsUndefined] = useState(true);
 
-  // const test = async () => {
-  //   const res = axios.post("http://localhost:1337/investors", {
-  //     email: "testkksksksksk@gmail.com",
-  //     investment_amount: 1000,
-  //     project_id: 3,
-  //   });
-  // };
-
   useEffect(() => {
     (async () => {
       setIsLoading(true);
@@ -44,6 +36,15 @@ const App: React.FC = () => {
       }
     })();
   }, []);
+
+  const submit = async () => {
+    const res = await axios.post("http://localhost:1337/investors", {
+      email,
+      investment_amount: amount,
+      project_id: selectedProject && selectedProject.id,
+    });
+    console.log(res);
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Sorry, an error has occured.</div>;
@@ -85,6 +86,7 @@ const App: React.FC = () => {
               amount={amount}
               agreed={agreed}
               setAgreed={setAgreed}
+              submit={submit}
             />
           ) : (
             <Redirect to="/step2" />

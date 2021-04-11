@@ -8,6 +8,7 @@ import {
   ContentContainer,
   Message,
 } from "../../styles/styledElements";
+import { RelativeDiv } from "./styled";
 
 interface IProps {
   email: string;
@@ -67,14 +68,17 @@ const Step2: React.FC<IProps> = ({
           invalid={emailIsInvalid}
         />
 
-        <StyledInput
-          type="string"
-          name="amount"
-          placeholder="Investment Amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          invalid={amountIsInvalid}
-        />
+        <RelativeDiv>
+          <StyledInput
+            type="string"
+            name="amount"
+            placeholder="Investment Amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            invalid={amountIsInvalid}
+          />
+          <span>EUR</span>
+        </RelativeDiv>
 
         <StyledButton onClick={onClick}>Continue</StyledButton>
         {emailIsInvalid || amountIsInvalid ? (

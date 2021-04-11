@@ -39,6 +39,13 @@ const Step2: React.FC<IProps> = ({ selectedProject, email, amount }) => {
 
         if (res.status === 200) {
           setSubmitted(true);
+
+          axios.get("http://localhost:1337/email", {
+            headers: {
+              to: email,
+              amount,
+            },
+          });
         }
         console.log(res);
       } catch (error) {

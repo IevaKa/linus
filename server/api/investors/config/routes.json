@@ -2,12 +2,6 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/email",
-      "handler": "Email.index",
-      "config": {}
-    },
-    {
-      "method": "GET",
       "path": "/investors",
       "handler": "investors.find",
       "config": {

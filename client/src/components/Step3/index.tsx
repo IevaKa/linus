@@ -40,11 +40,9 @@ const Step2: React.FC<IProps> = ({ selectedProject, email, amount }) => {
         if (res.status === 200) {
           setSubmitted(true);
 
-          axios.get("http://localhost:1337/email", {
-            headers: {
-              to: email,
-              amount,
-            },
+          await axios.post("http://localhost:1337/emailing", {
+            to: email,
+            amount,
           });
         }
         console.log(res);
@@ -102,7 +100,9 @@ const Step2: React.FC<IProps> = ({ selectedProject, email, amount }) => {
             Your investment has been submitted. Thank you!
           </Message>
         ) : null}
-        {isLoading ? <Message error={false}>Loading...</Message> : null}
+        {isLoading && !submitted ? (
+          <Message error={false}>Loading...</Message>
+        ) : null}
         {isError ? (
           <Message error={true}>
             Sorry, an error has occured. Please try again later.

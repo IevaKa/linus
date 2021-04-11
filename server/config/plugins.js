@@ -4,7 +4,7 @@ module.exports = ({ env }) => ({
     providerOptions: {
       apiKey: env("SENDGRID_API_KEY"),
     },
-    setting: {
+    settings: {
       defaultFrom: "kaziukonyte.ieva@gmail.com",
       defaultReplyTo: "kaziukonyte.ieva@gmail.com",
     },

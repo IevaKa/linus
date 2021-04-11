@@ -43,7 +43,11 @@ const Step2: React.FC<IProps> = ({
       setEmailIsInvalid(false);
     }
 
-    if (isNaN(+amount.replace(",", ".")) || amount === "0") {
+    if (
+      isNaN(+amount.replace(",", ".")) ||
+      amount === "0" ||
+      +amount.replace(",", ".") < 0
+    ) {
       setAmountIsInvalid(true);
       return;
     } else {

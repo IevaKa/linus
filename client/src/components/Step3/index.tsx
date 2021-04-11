@@ -1,4 +1,5 @@
-import React, { useState, Dispatch } from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import { IProject } from "../../App";
 import { StyledTableCell, StyledCheckbox } from "./styled";
 import {
@@ -6,34 +7,45 @@ import {
   StyledHeading,
   StyledButton,
   ContentContainer,
-  ErrorMessage,
+  Message,
 } from "../../styles/styledElements";
 
 interface IProps {
   selectedProject: IProject | undefined;
   email: string;
   amount: string;
-  agreed: boolean;
-  setAgreed: Dispatch<boolean>;
-  submit: any;
 }
 
-const Step2: React.FC<IProps> = ({
-  selectedProject,
-  email,
-  amount,
-  agreed,
-  setAgreed,
-  submit,
-}) => {
+const Step2: React.FC<IProps> = ({ selectedProject, email, amount }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [triedToSubmit, setTriedToSubmit] = useState(false);
-  const onClick = () => {
+  const [submitted, setSubmitted] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  const onClick = async () => {
     setTriedToSubmit(true);
 
     if (!agreed) {
       return;
     } else {
-      submit();
+      setIsLoading(true);
+      try {
+        const res = await axios.post("http://localhost:1337/investors", {
+          email,
+          investment_amount: amount,
+          project_id: selectedProject && selectedProject.id,
+        });
+
+        if (res.status === 200) {
+          setSubmitted(true);
+        }
+        console.log(res);
+      } catch (error) {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
   return (
@@ -74,7 +86,20 @@ const Step2: React.FC<IProps> = ({
         </StyledCheckbox>
         <StyledButton onClick={onClick}>Invest</StyledButton>
         {triedToSubmit && !agreed ? (
-          <ErrorMessage>Please accept the terms and conditions.</ErrorMessage>
+          <Message error={true}>
+            Please accept the terms and conditions.
+          </Message>
+        ) : null}
+        {submitted ? (
+          <Message error={false}>
+            Your investment has been submitted. Thank you!
+          </Message>
+        ) : null}
+        {isLoading ? <Message error={false}>Loading...</Message> : null}
+        {isError ? (
+          <Message error={true}>
+            Sorry, an error has occured. Please try again later.
+          </Message>
         ) : null}
       </ContentContainer>
     </StyledWrapper>

@@ -6,7 +6,7 @@ import {
   StyledInput,
   StyledButton,
   ContentContainer,
-  ErrorMessage,
+  Message,
 } from "../../styles/styledElements";
 
 interface IProps {
@@ -78,7 +78,7 @@ const Step2: React.FC<IProps> = ({
 
         <StyledButton onClick={onClick}>Continue</StyledButton>
         {emailIsInvalid || amountIsInvalid ? (
-          <ErrorMessage>Please enter valid values.</ErrorMessage>
+          <Message error={true}>Please enter valid values.</Message>
         ) : null}
       </ContentContainer>
     </StyledWrapper>

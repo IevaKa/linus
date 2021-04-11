@@ -6,3 +6,5 @@ export const DARK_GREY = "#7B8393";
 export const WHITE = "#FFF";
 export const ERROR_RED = "#ff0033";
 export const TRANSPARENT_ERROR_RED = "rgba(255, 0, 51, 0.2)";
+export const SUCCESS_GREEN = "#0B8008";
+export const TRANSPARENT_SUCCESS_GREEN = "rgba(5, 255, 0, 0.2)";

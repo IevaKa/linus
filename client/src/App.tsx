@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Step1 from "./components/Step1";
 import Step2 from "./components/Step2";
 import Step3 from "./components/Step3";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 export interface IProject {
   id: number;
@@ -12,51 +11,17 @@ export interface IProject {
 }
 
 const App: React.FC = () => {
-  const [projects, setProjects] = useState<IProject[]>([]);
   const [selectedProject, setSelectedProject] = useState<IProject>();
   const [email, setEmail] = useState("");
   const [amount, setAmount] = useState("");
-  const [agreed, setAgreed] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [investorInfoIsUndefined, setInvestorInfoIsUndefined] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(
-          "https://fullstack.linus-capital.com/projects"
-        );
-        setProjects(response.data.projects);
-      } catch (error) {
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, []);
-
-  const submit = async () => {
-    const res = await axios.post("http://localhost:1337/investors", {
-      email,
-      investment_amount: amount,
-      project_id: selectedProject && selectedProject.id,
-    });
-    console.log(res);
-  };
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Sorry, an error has occured.</div>;
 
   return (
     <Router>
       <Route
         path="/"
         exact
-        render={() => (
-          <Step1 projects={projects} setSelectedProject={setSelectedProject} />
-        )}
+        render={() => <Step1 setSelectedProject={setSelectedProject} />}
       />
       <Route
         path="/step2"
@@ -84,9 +49,6 @@ const App: React.FC = () => {
               selectedProject={selectedProject}
               email={email}
               amount={amount}
-              agreed={agreed}
-              setAgreed={setAgreed}
-              submit={submit}
             />
           ) : (
             <Redirect to="/step2" />

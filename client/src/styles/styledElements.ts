@@ -5,7 +5,9 @@ import {
   BUTTON_COLOR,
   WHITE,
   ERROR_RED,
+  SUCCESS_GREEN,
   TRANSPARENT_ERROR_RED,
+  TRANSPARENT_SUCCESS_GREEN,
 } from "./colors";
 
 export const StyledHeading = styled.h2`
@@ -19,6 +21,7 @@ export const StyledWrapper = styled.div`
   max-width: 515px;
   margin: 0 auto;
   margin-top: 50px;
+  padding: 0 20px;
 `;
 
 interface IInputProps {
@@ -63,17 +66,22 @@ export const StyledButton = styled.button`
 
 export const ContentContainer = styled.div`
   margin: 0 auto;
-  width: 389px;
+  max-width: 389px;
   margin-top: 35px;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-export const ErrorMessage = styled.div`
+interface IMessageProps {
+  error: boolean;
+}
+export const Message = styled.div<IMessageProps>`
+  text-align: center;
   padding: 10px;
   margin-top: 20px;
   width: 100%;
-  background-color: ${TRANSPARENT_ERROR_RED};
-  color: ${ERROR_RED};
+  background-color: ${({ error }) =>
+    error ? TRANSPARENT_ERROR_RED : TRANSPARENT_SUCCESS_GREEN};
+  color: ${({ error }) => (error ? ERROR_RED : SUCCESS_GREEN)};
 `;

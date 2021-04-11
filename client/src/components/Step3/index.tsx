@@ -25,6 +25,7 @@ const Step2: React.FC<IProps> = ({ selectedProject, email, amount }) => {
 
   const onClick = async () => {
     setTriedToSubmit(true);
+    setIsError(false);
 
     if (!agreed) {
       return;

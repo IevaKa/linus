@@ -1,12 +1,8 @@
 import React, { Dispatch } from "react";
-import styled from "styled-components";
-import { StyledHeading, StyledWrapper } from "../styles/styledElements";
+import { StyledHeading, StyledWrapper } from "../../styles/styledElements";
 import Project from "./Project";
-import { IProject } from "../App";
-
-const ProjectContainer = styled.div`
-  margin-top: 35px;
-`;
+import { IProject } from "../../App";
+import { ProjectContainer } from "./styled";
 
 export interface IProps {
   projects: IProject[];

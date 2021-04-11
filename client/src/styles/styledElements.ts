@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { INPUT_BORDER, INPUT_PLACEHOLDER, BUTTON_COLOR } from "./colors";
+import {
+  INPUT_BORDER,
+  VERY_LIGHT_GREY,
+  BUTTON_COLOR,
+  WHITE,
+  ERROR_RED,
+} from "./colors";
 
 export const StyledHeading = styled.h2`
   font-weight: 700;
@@ -14,8 +20,12 @@ export const StyledWrapper = styled.div`
   margin-top: 50px;
 `;
 
-export const StyledInput = styled.input`
+interface IInputProps {
+  invalid: boolean;
+}
+export const StyledInput = styled.input<IInputProps>`
   border: 1px solid ${INPUT_BORDER};
+  border-color: ${({ invalid }) => (invalid ? ERROR_RED : INPUT_BORDER)};
   height: 35px;
   width: 100%;
   padding-left: 10px;
@@ -23,14 +33,14 @@ export const StyledInput = styled.input`
   outline: none;
 
   &::placeholder {
-    color: ${INPUT_PLACEHOLDER};
+    color: ${VERY_LIGHT_GREY};
     opacity: 0.5;
   }
 `;
 
 export const StyledButton = styled.button`
   background-color: ${BUTTON_COLOR};
-  color: white;
+  color: ${WHITE};
   outline: none;
   border: none;
   border-radius: 3px;
@@ -50,7 +60,7 @@ export const StyledButton = styled.button`
   }
 `;
 
-export const InputContainer = styled.div`
+export const ContentContainer = styled.div`
   margin: 0 auto;
   width: 389px;
   margin-top: 35px;
